@@ -2,11 +2,13 @@
 
 ## My TRhoughts
 
-A simple Laravel and Vue CRUD application 
+A simple Laravel and Vue CRUD application to introduce Laravel API and Vue
 
 ## How to use
 
 ### Clone repository
+
+### Install dependencies
 
 $ composer install
 
@@ -18,3 +20,6 @@ $ composer update
 
 $ php artisan key:generate
 
+## Developed by
+
+Sergi Virgili (vir.dev)
