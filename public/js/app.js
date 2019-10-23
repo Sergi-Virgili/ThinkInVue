@@ -1829,6 +1829,62 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MyThinkComponent.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/MyThinkComponent.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      thoughts: []
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/thoughts').then(function (response) {
+      _this.thoughts = response.data;
+    });
+  },
+  methods: {
+    addThought: function addThought(thought) {
+      this.thoughts.push(thought);
+    },
+    deleteThought: function deleteThought(index) {
+      this.thoughts.splice(index, 1);
+    },
+    updateThought: function updateThought(index, thought) {
+      this.thoughts[index] = thought;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ThinkComponent.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ThinkComponent.vue?vue&type=script&lang=js& ***!
@@ -1854,9 +1910,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['thought'],
+  data: function data() {
+    return {
+      editMode: false
+    };
+  },
   mounted: function mounted() {
     console.log('Component mounted.');
+  },
+  methods: {
+    OnClickDelete: function OnClickDelete() {
+      var _this = this;
+
+      //console.log(`${this.thought.id}`)
+      axios["delete"]("/thoughts/".concat(this.thought.id)).then(function () {
+        return _this.$emit('delete');
+      });
+    },
+    OnClickEdit: function OnClickEdit() {
+      this.editMode = true;
+    },
+    OnClickUpdate: function OnClickUpdate(thought) {
+      var _this2 = this;
+
+      var params = {
+        description: this.thought.description
+      };
+      axios.put("/thoughts/".concat(this.thought.id), params).then(function (response) {
+        _this2.editMode = false;
+        var thought = response.data;
+
+        _this2.$emit('update', thought);
+      });
+    }
   }
 });
 
@@ -1890,9 +1988,50 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      description: ''
+    };
+  },
   mounted: function mounted() {
-    console.log('thinkform mounted.');
+    console.log('thinkform mounted');
+  },
+  methods: {
+    newThought: function newThought() {
+      var _this = this;
+
+      var params = {
+        description: this.description
+      };
+      axios.post('/thoughts', params).then(function (response) {
+        console.log(response);
+        var thought = response.data;
+
+        _this.$emit('new', thought);
+      });
+      this.description = '';
+    }
   }
 });
 
@@ -37189,6 +37328,54 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MyThinkComponent.vue?vue&type=template&id=7989e3e2&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/MyThinkComponent.vue?vue&type=template&id=7989e3e2& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _c(
+      "div",
+      { staticClass: "col-md-8" },
+      [
+        _c("form-component", { on: { new: _vm.addThought } }),
+        _vm._v(" "),
+        _vm._l(_vm.thoughts, function(thought, index) {
+          return _c("think-component", {
+            key: thought.id,
+            attrs: { thought: thought },
+            on: {
+              delete: function($event) {
+                return _vm.deleteThought(index)
+              },
+              update: function($event) {
+                return _vm.updateThought(index, thought)
+              }
+            }
+          })
+        })
+      ],
+      2
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ThinkComponent.vue?vue&type=template&id=1be185d6&":
 /*!*****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ThinkComponent.vue?vue&type=template&id=1be185d6& ***!
@@ -37204,34 +37391,104 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }, [
-        _vm._v("Published at 17/6/2019")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("p", [
-          _vm._v(
-            "\n            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla quisquam culpa in totam esse tempore reiciendis, minus voluptas corrupti, unde iste. Tempore vel id debitis, ullam tempora quibusdam. Quam, impedit!\n        "
+  return _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "card-header" }, [
+      _vm._v("Published at " + _vm._s(_vm.thought.created_at))
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body" }, [
+      !_vm.editMode
+        ? _c(
+            "p",
+            {
+              on: {
+                click: function($event) {
+                  return _vm.OnClickEdit()
+                }
+              }
+            },
+            [
+              _vm._v(
+                "\n            " +
+                  _vm._s(_vm.thought.description) +
+                  "\n        "
+              )
+            ]
           )
-        ])
-      ]),
+        : _vm._e(),
       _vm._v(" "),
-      _c("div", { staticClass: "card-footer" }, [
-        _c("button", { staticClass: "btn btn-default" }, [_vm._v("Edit")]),
-        _vm._v(" "),
-        _c("button", { staticClass: "btn btn-danger" }, [_vm._v("Delete")])
-      ])
+      _vm.editMode
+        ? _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.thought.description,
+                expression: "thought.description"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.thought.description },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.thought, "description", $event.target.value)
+              }
+            }
+          })
+        : _vm._e()
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-footer" }, [
+      _vm.editMode
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-success",
+              on: {
+                click: function($event) {
+                  return _vm.OnClickUpdate()
+                }
+              }
+            },
+            [_vm._v("Save")]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      !_vm.editMode
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-default",
+              on: {
+                click: function($event) {
+                  return _vm.OnClickEdit()
+                }
+              }
+            },
+            [_vm._v("Edit")]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger",
+          on: {
+            click: function($event) {
+              return _vm.OnClickDelete()
+            }
+          }
+        },
+        [_vm._v("Delete")]
+      )
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -37253,35 +37510,105 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "card-header" }, [_vm._v("Your Thoughts")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body" }, [
+      _c(
+        "form",
+        {
+          attrs: { action: "" },
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.newThought()
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "thought" } }, [
+              _vm._v("I'm Thinking About:")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.description,
+                  expression: "description"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", name: "thought" },
+              domProps: { value: _vm.description },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.description = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _vm._m(0),
+          _vm._v(" "),
+          _vm._m(1)
+        ]
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }, [_vm._v("Your Thoughts")]),
+    return _c("div", { staticClass: "input-group" }, [
+      _c("div", { staticClass: "custom-file" }, [
+        _c("input", {
+          staticClass: "custom-file-input",
+          attrs: { type: "file", id: "inputGroupFile04" }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "custom-file-label",
+            attrs: { for: "inputGroupFile04" }
+          },
+          [_vm._v("Choose file")]
+        )
+      ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("form", { attrs: { action: "" } }, [
-          _c("div", { staticClass: "form-grou" }, [
-            _c("label", { attrs: { for: "thought" } }, [
-              _vm._v("I'm Thinking About:")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "text", name: "thought", id: "" }
-            })
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-            [_vm._v("\n                    Send\n                ")]
-          )
-        ])
+      _c("div", { staticClass: "input-group-append" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-outline-secondary",
+            attrs: { type: "button" }
+          },
+          [_vm._v("Button")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("\n                        Send\n                    ")]
+      ),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-success" }, [
+        _vm._v("\n                        Camera\n                    ")
       ])
     ])
   }
@@ -49443,24 +49770,9 @@ module.exports = function(module) {
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
 Vue.component('form-component', __webpack_require__(/*! ./components/ThinkForm.vue */ "./resources/js/components/ThinkForm.vue")["default"]);
 Vue.component('think-component', __webpack_require__(/*! ./components/ThinkComponent.vue */ "./resources/js/components/ThinkComponent.vue")["default"]);
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
+Vue.component('mythink-component', __webpack_require__(/*! ./components/MyThinkComponent.vue */ "./resources/js/components/MyThinkComponent.vue")["default"]);
 var app = new Vue({
   el: '#app'
 });
@@ -49509,6 +49821,75 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/MyThinkComponent.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/MyThinkComponent.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _MyThinkComponent_vue_vue_type_template_id_7989e3e2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MyThinkComponent.vue?vue&type=template&id=7989e3e2& */ "./resources/js/components/MyThinkComponent.vue?vue&type=template&id=7989e3e2&");
+/* harmony import */ var _MyThinkComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MyThinkComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/MyThinkComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _MyThinkComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _MyThinkComponent_vue_vue_type_template_id_7989e3e2___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _MyThinkComponent_vue_vue_type_template_id_7989e3e2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/MyThinkComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/MyThinkComponent.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/MyThinkComponent.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MyThinkComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./MyThinkComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MyThinkComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MyThinkComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/MyThinkComponent.vue?vue&type=template&id=7989e3e2&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/MyThinkComponent.vue?vue&type=template&id=7989e3e2& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MyThinkComponent_vue_vue_type_template_id_7989e3e2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./MyThinkComponent.vue?vue&type=template&id=7989e3e2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MyThinkComponent.vue?vue&type=template&id=7989e3e2&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MyThinkComponent_vue_vue_type_template_id_7989e3e2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MyThinkComponent_vue_vue_type_template_id_7989e3e2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
