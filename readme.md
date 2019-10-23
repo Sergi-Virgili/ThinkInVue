@@ -20,6 +20,18 @@ $ composer update
 
 $ php artisan key:generate
 
+### Install npm dependencies using:
+
+$ npm i
+
+### Run Laravel server using:
+
+$ php artisan serve
+
+### Watching changes on javascript and sass files:
+
+$ npm run whatch
+
 ## Developed by
 
 Sergi Virgili (vir.dev)
