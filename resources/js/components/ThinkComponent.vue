@@ -44,7 +44,8 @@
             },
 
             OnClickEdit() {
-               this.editMode = true
+                this.editMode = true
+
             },
 
             OnClickUpdate(thought) {
