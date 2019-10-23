@@ -1,6 +1,6 @@
 
 
-## My Thoughts
+# My Thoughts
 
 A simple Laravel and Vue CRUD application to introduce Laravel API and Vue
 
