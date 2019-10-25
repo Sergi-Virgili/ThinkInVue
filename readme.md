@@ -30,7 +30,7 @@ $ php artisan serve
 
 ### Watching changes on javascript and sass files:
 
-$ npm run whatch
+$ npm run watch
 
 ## Developed by
 
